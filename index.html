@@ -64,7 +64,7 @@ function actualizarCarrito() {
   ul.innerHTML = "";
   carrito.forEach(p => {
     let li = document.createElement("li");
-    li.textContent = ⁠ ${p.nombre} - $${p.precio} ⁠;
+    li.textContent = `${p.nombre} - $${p.precio}`;
     ul.appendChild(li);
   });
 }
@@ -72,11 +72,11 @@ function actualizarCarrito() {
 function enviarWhatsApp() {
   let mensaje = "Hola, quiero pedir:\n";
   carrito.forEach(p => {
-    mensaje += ⁠ - ${p.nombre} ($${p.precio})\n ⁠;
+    mensaje += `- ${p.nombre} ($${p.precio})\n`;
   });
   
   let telefono = "521XXXXXXXXXX";
-  let url = ⁠ https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)} ⁠;
+  let url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
   window.open(url);
 }
 </script>
