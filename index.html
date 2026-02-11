@@ -25,18 +25,16 @@ body {
   border-radius: 12px;
   padding: 15px;
   margin: 20px auto;
-  display: inline-block;
 }
 
 .producto img {
   max-width: 220px;
   width: 100%;
   border-radius: 10px;
-  margin-bottom: 10px;
 }
 
 .precio { font-weight: bold; font-size: 18px; }
-.descripcion { font-size: 14px; margin-bottom: 6px; opacity:.9 }
+.descripcion { font-size: 14px; opacity:.9 }
 
 .stock { font-size: 13px; }
 .agotado { color: red; font-weight: bold; }
@@ -54,7 +52,6 @@ button {
 .sabor-btn { background: #746399; color: white; }
 .sabor-btn:disabled { background: #444; cursor: not-allowed; }
 
-/* CARRITO */
 #carritoIcono {
   position: fixed;
   bottom: 15px;
@@ -64,7 +61,6 @@ button {
   border-radius: 50%;
   font-size: 22px;
   cursor: pointer;
-  z-index: 999;
 }
 
 #carrito {
@@ -75,12 +71,8 @@ button {
   background: #831bde;
   border-radius: 12px;
   padding: 12px;
-  transform: scale(0);
-  transform-origin: bottom right;
-  transition: .3s;
+  display:none;
 }
-
-#carrito.abierto { transform: scale(1); }
 
 li {
   list-style: none;
@@ -91,15 +83,6 @@ li {
 }
 
 .cantidad-btn { padding: 4px 8px; margin: 2px; }
-
-@keyframes shake {
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-4px)}
-  50%{transform:translateX(4px)}
-  75%{transform:translateX(-4px)}
-  100%{transform:translateX(0)}
-}
-.shake { animation: shake .3s; }
 </style>
 </head>
 
@@ -108,132 +91,115 @@ li {
 <div class="container">
 <h1>Catálogo de Vapes</h1>
 
-<!-- TODO EL HTML DE PRODUCTOS QUEDA IGUAL -->
-<!-- (no modificado) -->
+<!-- WAKA SOPRO -->
+<div class="producto">
+<img src="wakasopro15000.jpg">
+<h3>Waka Sopro 15000</h3>
+<p class="precio">$350 MXN</p>
+<p class="descripcion">Promos: 1x$350 · 2x$600 · 3x$850 · 4x$1100</p>
+
+<button class="sabor-btn" onclick="agregar('Waka','Strawberry Kiwi')">
+Strawberry Kiwi (<span id="stock-waka-strawberry-kiwi"></span>)
+</button>
+
+<button class="sabor-btn" onclick="agregar('Waka','Fruit Punch')">
+Fruit Punch (<span id="stock-waka-fruit-punch"></span>)
+</button>
+
+<button class="sabor-btn" onclick="agregar('Waka','Mango Ice')">
+Mango Ice (<span id="stock-waka-mango-ice"></span>)
+</button>
+
+<button class="sabor-btn" onclick="agregar('Waka','Blueberry')">
+Blueberry (<span id="stock-waka-blueberry"></span>)
+</button>
 </div>
 
+<!-- CARRITO -->
 <div id="carritoIcono" onclick="toggleCarrito()">🛒</div>
 
 <div id="carrito">
 <h3>Tu Pedido</h3>
 <ul id="lista"></ul>
 <p><strong>Total: $<span id="total">0</span> MXN</strong></p>
-<button onclick="enviarWhatsApp()">WhatsApp</button>
 </div>
 
 <script>
-let carrito = [];
-
-/* ===== STOCK POR SABOR ===== */
-let stock = {
-  "Waka Strawberry Kiwi": 0,
-  "Waka Fruit Punch": 0,
-  "Waka Mango Ice": 0,
-  "Waka Blueberry": 0,
-
-  "Waka Strawberry Banana": 1,
-  "Waka Triple Mango": 1,
-  "Waka Cranberry Grape": 1,
-  "Waka Blue Razz Blackberry": 1,
-  "Waka Watermelon Chill": 1,
-  "Waka Kiwi Passion Guava": 1,
-  "Waka Strawberry Raspberry": 1,
-  "Waka Sour Fruit Gummy": 1,
-
-  /* DEATHROW CORREGIDO */
-  "DeathRow Sour Apple": 1,
-  "DeathRow Tobacco": 2,
-  "DeathRow Cherry Ice": 1,
-  "DeathRow Peach Grape": 1,
-  "DeathRow Peach Ice": 1,
-  "DeathRow Clear": 1,
-  "DeathRow Mango Lychee": 2,
-
-  "Snoopy Lush Ice": 2,
-  "Snoopy Strawberry Banana": 1,
-  "Snoopy Pink Lemonade": 1,
-  "Snoopy Strawberry Ice": 1,
-  "Snoopy Mexican Mango Ice": 1,
-  "Snoopy Bahama Mama": 1,
-  "Snoopy Tropical Rainbow Blast": 2,
-  "Snoopy Strawberry Peach Mint": 1
+let carrito=[];
+let stock={
+ "Waka Strawberry Kiwi":4,
+ "Waka Fruit Punch":4,
+ "Waka Mango Ice":4,
+ "Waka Blueberry":4
 };
 
 const promos={
-  Waka:[350,600,850,1100],
-  Wakaduo:[450,800],
-  DeathRow:[150,220],
-  Snoopy:[250,450]
+ Waka:[350,600,850,1100]
 };
 
 function toggleCarrito(){
-  document.getElementById("carrito").classList.toggle("abierto");
+ let c=document.getElementById("carrito");
+ c.style.display=c.style.display==="block"?"none":"block";
 }
 
-function agregar(nombre,sabor){
-  let key=`${nombre} ${sabor}`;
-  if(stock[key] <= 0) return;
-  stock[key]--;
+function agregar(marca,sabor){
+ let key=`${marca} ${sabor}`;
+ if(stock[key]<=0) return;
+ stock[key]--;
 
-  let item=carrito.find(p=>p.nombre===nombre && p.sabor===sabor);
-  item ? item.cantidad++ : carrito.push({nombre,sabor,cantidad:1});
-
-  document.getElementById("carritoIcono").classList.add("shake");
-  setTimeout(()=>document.getElementById("carritoIcono").classList.remove("shake"),300);
-  actualizar();
-}
-
-function quitar(i){
-  let it=carrito[i];
-  stock[`${it.nombre} ${it.sabor}`]++;
-  it.cantidad--;
-  if(it.cantidad<=0) carrito.splice(i,1);
-  actualizar();
+ let it=carrito.find(i=>i.marca===marca && i.sabor===sabor);
+ it?it.cantidad++:carrito.push({marca,sabor,cantidad:1});
+ actualizar();
 }
 
 function actualizar(){
-  let ul=document.getElementById("lista");
-  ul.innerHTML="";
-  let total=0;
-  let porMarca={};
+ let ul=document.getElementById("lista");
+ ul.innerHTML="";
+ let total=0;
+ let porMarca={};
 
-  carrito.forEach(i=>porMarca[i.nombre]=(porMarca[i.nombre]||0)+i.cantidad);
+ carrito.forEach(i=>porMarca[i.marca]=(porMarca[i.marca]||0)+i.cantidad);
 
-  for(let m in porMarca){
-    let c=porMarca[m];
-    let p=promos[m];
-    total+=Math.floor(c/4)*p[3];
-    c%=4;
-    if(c>0) total+=p[c-1];
-  }
+ for(let m in porMarca){
+  let c=porMarca[m];
+  let p=promos[m];
+  total+=Math.floor(c/4)*(p[3]||0);
+  c%=4;
+  if(c>0) total+=p[c-1];
+ }
 
-  carrito.forEach((i,idx)=>{
-    ul.innerHTML+=`
-    <li>${i.nombre}<br>${i.sabor}<br>
-    <button class="cantidad-btn" onclick="quitar(${idx})">➖</button>
-    ${i.cantidad}
-    <button class="cantidad-btn" onclick="agregar('${i.nombre}','${i.sabor}')">➕</button>
-    </li>`;
-  });
+ carrito.forEach((i,idx)=>{
+  ul.innerHTML+=`
+  <li>${i.marca}<br>${i.sabor}<br>
+  <button class="cantidad-btn" onclick="quitar(${idx})">➖</button>
+  ${i.cantidad}
+  <button class="cantidad-btn" onclick="agregar('${i.marca}','${i.sabor}')">➕</button>
+  </li>`;
+ });
 
-  document.getElementById("total").innerText=total;
-  actualizarStockUI();
+ document.getElementById("total").innerText=total;
+ actualizarStock();
 }
 
-function actualizarStockUI(){
-  for(let k in stock){
-    let id=k.toLowerCase().replace(/ /g,"-");
-    let span=document.getElementById("stock-"+id);
-    let btn=document.getElementById(id);
-    if(span){
-      span.innerText=stock[k]>0?"Stock: "+stock[k]:"AGOTADO";
-      span.className=stock[k]>0?"stock":"stock agotado";
-    }
-    if(btn) btn.disabled=stock[k]<=0;
-  }
+function quitar(i){
+ let it=carrito[i];
+ stock[`${it.marca} ${it.sabor}`]++;
+ it.cantidad--;
+ if(it.cantidad<=0) carrito.splice(i,1);
+ actualizar();
 }
 
-actualizarStockUI();
+function actualizarStock(){
+ for(let k in stock){
+  let id="stock-"+k.toLowerCase().replace(/ /g,"-");
+  let s=document.getElementById(id);
+  if(s){
+   s.innerText=stock[k]>0?`Stock: ${stock[k]}`:"AGOTADO";
+   s.className=stock[k]>0?"stock":"stock agotado";
+  }
+ }
+}
+actualizarStock();
 </script>
 
 </body>
