@@ -301,4 +301,32 @@ function actualizarStockUI(){
 }
 
 actualizarStockUI();
+<script>
+/* ===== ABRIR / CERRAR CARRITO ===== */
+function toggleCarrito(){
+  document.getElementById("carrito").classList.toggle("abierto");
+}
+
+/* ===== ENVIAR WHATSAPP ===== */
+function enviarWhatsApp(){
+  let msg="🛒 PEDIDO\n\n";
+  carrito.forEach(i=>{
+    msg+=`${i.nombre} - ${i.sabor} x${i.cantidad}\n`;
+  });
+  msg+=`\nTOTAL: $${document.getElementById("total").innerText} MXN`;
+  window.open(`https://wa.me/529841964069?text=${encodeURIComponent(msg)}`);
+}
+
+/* ===== COMPARTIR CATÁLOGO ===== */
+function compartir(){
+  if(navigator.share){
+    navigator.share({
+      title:"Catálogo Mr Smoke",
+      url:location.href
+    });
+  }else{
+    alert("Copiá el link y compartilo");
+  }
+}
 </script>
+
