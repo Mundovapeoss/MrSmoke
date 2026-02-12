@@ -131,14 +131,14 @@ li {
 <p class="descripcion">Vape · 25,000 puffs Turbo · 5% Nicotina · 2 Power modes · Alta duración</p>
 <p class="descripcion">Promos: 1x$450 · 2x$800 ·</p>
 
-<button id="waka-strawberry-banana" class="sabor-btn" onclick="agregar('Waka','Strawberry Banana')">Strawberry Banana (<span class="stock" id="stock-waka-strawberry-banana"></span>)</button>
-<button id="waka-triple-mango" class="sabor-btn" onclick="agregar('Waka','Triple Mango')">Triple Mango (<span class="stock" id="stock-waka-triple-mango"></span>)</button>
-<button id="waka-cranberry-grape" class="sabor-btn" onclick="agregar('Waka','Cranberry Grape')">Cranberry Grape (<span class="stock" id="stock-waka-cranberry-grape"></span>)</button>
-<button id="waka-blue-razz-blackberry" class="sabor-btn" onclick="agregar('Waka','Blue Razz Blackberry')">Blue Razz Blackberry (<span class="stock" id="stock-waka-blue-razz-blackberry"></span>)</button>
-<button id="waka-watermelon-chill" class="sabor-btn" onclick="agregar('Waka','Watermelon Chill')">Watermelon Chill (<span class="stock" id="stock-waka-watermelon-chill"></span>)</button>
-<button id="waka-kiwi-passion-guava" class="sabor-btn" onclick="agregar('Waka','Kiwi Passion Guava')">Kiwi Passion Guava (<span class="stock" id="stock-waka-kiwi-passion-guava"></span>)</button>
-<button id="waka-strawberry-raspberry" class="sabor-btn" onclick="agregar('Waka','Strawberry Raspberry')">Strawberry Raspberry (<span class="stock" id="stock-waka-strawberry-raspberry"></span>)</button>
-<button id="waka-sour-fruit-gummy" class="sabor-btn" onclick="agregar('Waka','Sour Fruit Gummy')">Sour Fruit Gummy (<span class="stock" id="stock-waka-sour-fruit-gummy"></span>)</button>
+<button id="wakaduo-strawberry-banana" class="sabor-btn" onclick="agregar('Wakaduo','Strawberry Banana')">Strawberry Banana (<span class="stock" id="stock-wakaduo-strawberry-banana"></span>)</button>
+<button id="wakaduo-triple-mango" class="sabor-btn" onclick="agregar('Wakaduo','Triple Mango')">Triple Mango (<span class="stock" id="stock-wakaduo-triple-mango"></span>)</button>
+<button id="wakaduo-cranberry-grape" class="sabor-btn" onclick="agregar('Wakaduo','Cranberry Grape')">Cranberry Grape (<span class="stock" id="stock-wakaduo-cranberry-grape"></span>)</button>
+<button id="wakaduo-blue-razz-blackberry" class="sabor-btn" onclick="agregar('Wakaduo','Blue Razz Blackberry')">Blue Razz Blackberry (<span class="stock" id="stock-wakaduo-blue-razz-blackberry"></span>)</button>
+<button id="wakaduo-watermelon-chill" class="sabor-btn" onclick="agregar('Wakaduo','Watermelon Chill')">Watermelon Chill (<span class="stock" id="stock-wakaduo-watermelon-chill"></span>)</button>
+<button id="wakaduo-kiwi-passion-guava" class="sabor-btn" onclick="agregar('Wakaduo','Kiwi Passion Guava')">Kiwi Passion Guava (<span class="stock" id="stock-wakaduo-kiwi-passion-guava"></span>)</button>
+<button id="wakaduo-strawberry-raspberry" class="sabor-btn" onclick="agregar('Wakaduo','Strawberry Raspberry')">Strawberry Raspberry (<span class="stock" id="stock-wakaduo-strawberry-raspberry"></span>)</button>
+<button id="wakaduo-sour-fruit-gummy" class="sabor-btn" onclick="agregar('Wakaduo','Sour Fruit Gummy')">Sour Fruit Gummy (<span class="stock" id="stock-wakaduo-sour-fruit-gummy"></span>)</button>
 </div>
   
   <!-- DEATHROW -->
@@ -201,14 +201,14 @@ let stock = {
   "Waka Blueberry": 0,
 
   /* WAKA DUO */
-  "Waka Strawberry Banana": 1,
-  "Waka Triple Mango": 1,
-  "Waka Cranberry Grape": 1,
-  "Waka Blue Razz Blackberry": 1,
-  "Waka Watermelon Chill": 1,
-  "Waka Kiwi Passion Guava": 1,
-  "Waka Strawberry Raspberry": 1,
-  "Waka Sour Fruit Gummy": 1,
+  "Wakaduo Strawberry Banana": 1,
+  "Wakaduo Triple Mango": 1,
+  "Wakaduo Cranberry Grape": 1,
+  "Wakaduo Blue Razz Blackberry": 1,
+  "Wakaduo Watermelon Chill": 1,
+  "Wakaduo Kiwi Passion Guava": 1,
+  "Wakaduo Strawberry Raspberry": 1,
+  "Wakaduo Sour Fruit Gummy": 1,
 
   /* DEATHROW */
   "Death Sour Apple": 1,
@@ -232,9 +232,9 @@ let stock = {
 
 const promos={
   Waka:[350,600,850,1100],
-  Wakaduo:[450,800],
-  DeathRow:[150,220],
-  Snoopy:[250,450]
+  Wakaduo:[450,800,1250,1600],
+  DeathRow:[150,220,370,440],
+  Snoopy:[250,450,700,900]
 };
 
 function agregar(nombre,sabor){
