@@ -303,6 +303,26 @@ function actualizarStockUI(){
   function toggleCarrito(){
   document.getElementById("carrito").classList.toggle("abierto");
 }
+function enviarWhatsApp(){
+  if(carrito.length === 0){
+    alert("Tu carrito está vacío");
+    return;
+  }
+
+  let mensaje = "🛒 *Nuevo Pedido*\n\n";
+
+  carrito.forEach(item=>{
+    mensaje += `• ${item.nombre} - ${item.sabor} x${item.cantidad}\n`;
+  });
+
+  mensaje += `\n💰 Total: $${document.getElementById("total").innerText} MXN`;
+
+  let numero = "5219841964069"; 
+  let url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+
+  window.open(url, "_blank");
+}
 
 actualizarStockUI();
+
 </script>
